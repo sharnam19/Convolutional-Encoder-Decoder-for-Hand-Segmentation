@@ -104,10 +104,12 @@ clf.add(Convolution2D(3, (3, 3), padding='same'))
 clf.add(Activation('tanh'))
 
 clf.compile(optimizer=adam,loss='mse',metrics=['mae'])
-clf.fit(X_train,y_train,batch_size=20, epochs=1000,validation_split=0.1)
+clf.fit(X_train,y_train,batch_size=20, epochs=20,validation_split=0.2)
 
 y_out = clf.predict(X_test)
 y_out*=128
 y_out+=128
+clf.save_model('model-20.h5')
 for y in range(y_out.shape[0]):
     cv2.imwrite('y'+str(y)+'.jpg',y_out[y])
+
