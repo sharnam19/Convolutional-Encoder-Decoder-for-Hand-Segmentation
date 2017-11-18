@@ -44,11 +44,12 @@ X_test = np.zeros((5,128,128,3))
 tests = ["A-train0101.jpg","A-train0102.jpg","A-train0103.jpg","A-train0104.jpg","A-train0105.jpg"]
 for pos in range(len(tests)):
     X_test[pos] = cv2.imread(path_x+tests[pos])
-X_train-=128
-X_train/=128
-y_train-=128
-y_train/=128
-
+X_train-=128.0
+X_train/=128.0
+y_train-=128.0
+y_train/=128.0
+X_test-=128.0
+X_test/=128.0
 #
 # meen = np.mean(X_train,axis=(0,1,2))
 # std = np.std(X_train,axis=(0,1,2))
@@ -104,12 +105,11 @@ clf.add(Convolution2D(3, (3, 3), padding='same'))
 clf.add(Activation('tanh'))
 
 clf.compile(optimizer=adam,loss='mse',metrics=['mae'])
-clf.fit(X_train,y_train,batch_size=20, epochs=20,validation_split=0.2)
+clf.fit(X_train,y_train,batch_size=25, epochs=1,validation_split=0.2)
 
 y_out = clf.predict(X_test)
-y_out*=128
-y_out+=128
-clf.save_model('model-20.h5')
+y_out*=128.0
+y_out+=128.0
+clf.save('model-5.h5')
 for y in range(y_out.shape[0]):
     cv2.imwrite('y'+str(y)+'.jpg',y_out[y])
-
