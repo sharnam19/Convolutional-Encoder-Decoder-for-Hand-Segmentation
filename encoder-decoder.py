@@ -99,6 +99,8 @@ clf.add(Activation('relu'))
 clf.add(Convolution2D(3, (3, 3), padding='same'))
 clf.add(Activation('softmax'))
 
+clf.add(Multiply(255))
+
 clf.compile(optimizer=adam,loss='mse',metrics=['mae'])
 clf.fit(X_train,y_train,batch_size=20, epochs=1000,validation_split=0.1)
 
