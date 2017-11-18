@@ -23,7 +23,7 @@ path_x = 'Data/X/'
 path_y = 'Data/Y2/'
 total = 0
 #for pos in range(len(path_x)):
-for img in os.listdir(path_x):
+for img in sorted(os.listdir(path_x))[:-5]:
     originalIm = cv2.imread(path_x+img)
     segmentedIm = cv2.imread(path_y+img)
 
