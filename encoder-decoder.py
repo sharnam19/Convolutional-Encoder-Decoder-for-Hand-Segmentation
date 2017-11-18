@@ -44,6 +44,10 @@ X_test = np.zeros((5,128,128,3))
 tests = ["A-train0101.jpg","A-train0102.jpg","A-train0103.jpg","A-train0104.jpg","A-train0105.jpg"]
 for pos in range(len(tests)):
     X_test[pos] = cv2.imread(path_x+tests[pos])
+X_train-=128
+X_train/=128
+y_train-=128
+y_train/=128
 
 #
 # meen = np.mean(X_train,axis=(0,1,2))
@@ -97,13 +101,13 @@ clf.add(BatchNormalization())
 clf.add(Activation('relu'))
 
 clf.add(Convolution2D(3, (3, 3), padding='same'))
-clf.add(Activation('softmax'))
-
-clf.add(Multiply(255))
+clf.add(Activation('tanh'))
 
 clf.compile(optimizer=adam,loss='mse',metrics=['mae'])
 clf.fit(X_train,y_train,batch_size=20, epochs=1000,validation_split=0.1)
 
 y_out = clf.predict(X_test)
+y_out*=128
+y_out+=128
 for y in range(y_out.shape[0]):
     cv2.imwrite('y'+str(y)+'.jpg',y_out[y])
