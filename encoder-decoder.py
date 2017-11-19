@@ -9,7 +9,7 @@ from keras import regularizers
 import os
 import cv2
 import numpy as np
-
+import sys
 angles = range(-2,3)
 shifts = [[0,0],[0,1],[1,0],[1,1],[0,2],[2,0],[1,2],[2,1],[2,2],
                 [0,-1],[-1,0],[-1,-1],[0,-2],[-2,0],[-1,-2],[-2,-1],[-2,-2],
@@ -106,7 +106,7 @@ clf.add(Activation('tanh'))
 
 clf.compile(optimizer=adam,loss='mse',metrics=['mae'])
 clf.fit(X_train,y_train,batch_size=30, epochs=10,validation_split=0.2)
-
+sys.stdout.flush()
 y_out = clf.predict(X_test)
 y_out*=128.0
 y_out+=128.0
